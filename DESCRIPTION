@@ -1,0 +1,14 @@
+Package: elfreadr
+Type: Package
+Title: Download ELF Data for nflverse
+Version: 0.1.0
+Author: Volker Schmid
+Authors@R: c(
+    person("Volker", "Schmid", , "volker.schmid@lmu.de", role = c("aut", "cre", "cph")
+    )
+Maintainer: Volker Schmid <volker.schmid@lmu.de>
+Description: Package for downloading ELF data for use in nflverse.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.1
