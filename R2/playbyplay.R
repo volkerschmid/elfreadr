@@ -1,13 +1,9 @@
-year=2022
-source("setup.R")
-source(paste0(home,"functions/correctnames.R"))
 library(pdftools)
 library(dplyr)
 library(readr)
 library(stringi)
 
 pdffiles<-list.files(paste0(home,"gamebooks/",year),full.names = TRUE)
-#pdffiles<-pdffiles[grepl(paste0(home,"gamebooks/",year),pdffiles)]
 
 line2col<-function(dat,split="  "){
   temp<-strsplit(dat,split) 

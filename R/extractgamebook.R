@@ -2,35 +2,35 @@
 #'
 #' @param pdffile
 #'
-#' @return
-#' @export
+#' @return something
+#' @export 
+#' @importFrom stringi stri_split_fixed
+#' @importFrom pdftools pdf_text
 #'
-#' @import pdftools stringi
-#' @examples
 
 extractgamebook <- function(pdffile) {
 
-  test<-pdf_text(pdffile)
+  test<-pdftools::pdf_text(pdffile)
 
   ## Page 1
 
   test<-test[[1]][[1]]
-  test<-stri_split_fixed(test,"\n")[[1]]
+  test<-stringi::stri_split_fixed(test,"\n")[[1]]
   att<-test[grep("Attendance",test)]
-  att<-as.integer(stri_split_fixed(att,":")[[1]][2])
-  teams <- stri_split_fixed(test[3]," vs ")[[1]]
-  teams <- unlist(stri_split_fixed(teams," ("))[1:2]
+  att<-as.integer(stringi::stri_split_fixed(att,":")[[1]][2])
+  teams <- stringi::stri_split_fixed(test[3]," vs ")[[1]]
+  teams <- unlist(stringi::stri_split_fixed(teams," ("))[1:2]
   teams <- trimws(teams)
-  date <- stri_split_fixed(test[7]," • ")[[1]]
-  city <- stri_split_fixed(date[2],"Site: ")[[1]][2]
-  stadium <- stri_split_fixed(date[3],"Stadium: ")[[1]][2]
-  date <- stri_split_fixed(date[1],"Date: ")[[1]][2]
+  date <- stringi::stri_split_fixed(test[7]," • ")[[1]]
+  city <- stringi::stri_split_fixed(date[2],"Site: ")[[1]][2]
+  stadium <- stringi::stri_split_fixed(date[3],"Stadium: ")[[1]][2]
+  date <- stringi::stri_split_fixed(date[1],"Date: ")[[1]][2]
   date <- as.Date(date,format = "%b %d, %Y")
   game<-data.frame("date"=date,"city"=city,"stadium"=stadium,"away"=teams[1],"home"=teams[2],"attendance"=att)
 
   # Score by quarters
   l <- grep("Score by Quarters",test)
-  awayq <- stri_split_fixed(test[l+1],"  ")[[1]]
+  awayq <- stringi::stri_split_fixed(test[l+1],"  ")[[1]]
   awayq<-awayq[awayq!=""]
   awaypoints<-awayq[length(awayq)]
   awayq1 <- as.integer(awayq[2])
@@ -38,7 +38,7 @@ extractgamebook <- function(pdffile) {
   awayq3 <- as.integer(awayq[4])
   awayq4 <- as.integer(awayq[5])
   if (length(awayq)==7){awayot <- as.integer(awayq[6]); OT=TRUE}
-  homeq <- stri_split_fixed(test[l+2],"  ")[[1]]
+  homeq <- stringi::stri_split_fixed(test[l+2],"  ")[[1]]
   homeq<-homeq[homeq!=""]
   hompoints<-homeq[length(homeq)]
   homeq1 <- as.integer(homeq[2])
@@ -56,7 +56,7 @@ extractgamebook <- function(pdffile) {
 
   # Rest
   l6 <- grep("Kickoff",test)
-  temp <- stri_split_fixed(test[l6]," • ")
+  temp <- stringi::stri_split_fixed(test[l6]," • ")
 
 
 }
