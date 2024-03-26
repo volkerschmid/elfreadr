@@ -58,5 +58,12 @@ extractgamebook <- function(pdffile) {
   l6 <- grep("Kickoff",test)
   temp <- stringi::stri_split_fixed(test[l6]," • ")
 
-
+  data(elfteams)
+  week=1
+  season_type="REG"
+  hometeam=teams$code3[teams$name==game$home]
+  awayteam=teams$code3[teams$name==game$away]
+  gameid<-paste0(substr(game$date,1,4),"_",ifelse(week<10,"0",""),week,"_",awayteam,"_",hometeam)
+  names(data)
+  play_id=1
 }
